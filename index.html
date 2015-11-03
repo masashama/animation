@@ -1,0 +1,72 @@
+<html>
+<head>
+    <script src="https://code.createjs.com/createjs-2015.05.21.min.js"></script>
+    <script src="Molecule.js"></script>
+    <script>
+        function init() {
+            createjs.MotionGuidePlugin.install();
+
+            var center = new Molecule(440,210,300,300);
+                center.addBitmap('center.png');
+                center.setGuide([-50,30, -50,-40, 0,-15]);
+            var left = new Molecule(400-310, 210+90, 300, 290);
+                left.addBitmap('left.png', 50, 76);
+                left.setGuide([-40,15, -15,-50, -20,5]);
+                left.addCircles([
+                    {x:0,y:105, r: 10, color: 'red'},
+                    {x:20, y:5, r: 10, color: 'coral'},
+                    {x:150,y:20, r: 10, color: 'salmon'},
+                    {x:250,y:100, r: 10, color: 'green'},
+                    {x:20,y:220, r: 10, color: 'blue'},
+                    {x:110,y:300, r: 10, color: 'black'},
+                    {x:320,y:230, r: 10, color: 'purple'},
+                    {x:240,y:320, r: 10, color: 'chocolate'}
+                ]);
+            var top = new Molecule(400+200, 210-97, 150, 97);
+                top.addBitmap('top.png', 0, 0);
+                top.setGuide([10, 15, 5, 0, 10, -5]);
+                top.addCircles([
+                    {x:125,y:130, r: 10, color: "gold"},
+                    {x:190,y:40, r: 10, color: "gray"},
+                    {x:-40,y:10, r: 10, color: "goldenrod"},
+                    {x:40,y:-60, r: 10, color: "deepskyblue"},
+                    {x:140,y:-60, r: 10, color: "firebrick"}
+                ]);
+            var right = new Molecule(400+300, 210+250, 200, 150);
+                right.addBitmap('right.png');
+                right.setGuide([-200, -20, -10, -10, -5, 5]);
+                right.addCircles([
+                    {x:190,y:60, r: 10, color: "lime"},
+                    {x:60,y:120, r: 10, color: "magenta"}
+                ]);
+
+
+            var stage = new createjs.Stage("demoCanvas");
+                stage.enableMouseOver(20);
+                stage.addChild(center.draw(true));
+                stage.addChild(left.draw(true));
+                stage.addChild(top.draw(true));
+                stage.addChild(right.draw(true));
+                stage.update();
+
+            createjs.Ticker.setFPS(60);
+            createjs.Ticker.addEventListener("tick", frameDrawer);
+
+            function frameDrawer(event){
+
+                left.circleAnimation();
+                top.circleAnimation();
+                right.circleAnimation();
+
+                stage.update(event); // надобы!
+            }
+
+        }
+    </script>
+</head>
+<body onload="init();">
+    <div style="margin: 0 auto; width:1000px; height: 800px; border:1px solid black;">
+        <canvas  id="demoCanvas" width="1000" height="800"></canvas>
+    </div>
+</body>
+</html>
